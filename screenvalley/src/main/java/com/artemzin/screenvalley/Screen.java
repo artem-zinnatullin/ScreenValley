@@ -1,6 +1,5 @@
 package com.artemzin.screenvalley;
 
-import android.app.Activity;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.view.ViewGroup;
@@ -10,14 +9,14 @@ import java.util.Set;
 
 /**
  * Represents a screen of the app.
- * <p>
+ * <p/>
  * Screen is build of {@link ScreenPart}s,
  * just like {@link android.app.Activity} and {@link android.app.Fragment}.
  */
 public abstract class Screen {
 
     @NonNull
-    private final Activity activity;
+    private final ScreenValley screenValley;
 
     /**
      * Contains currently displayed {@link ScreenPart}s.
@@ -25,19 +24,20 @@ public abstract class Screen {
     @NonNull
     private final Set<ScreenPart> screenParts = new HashSet<>(1);
 
-    public Screen(@NonNull Activity activity) {
-        this.activity = activity;
+    public Screen(@NonNull ScreenValley screenValley) {
+        this.screenValley = screenValley;
     }
 
     public void addScreenPart(@IdRes int viewGroupId, @NonNull ScreenPart screenPart) {
         final boolean suchScreenPartAlreadyAdded = screenParts.add(screenPart);
 
         if (suchScreenPartAlreadyAdded) {
-            throw new IllegalStateException("Exact same instance of screenPart was already added to this Screen. " +
-                    "ScreenPart class == " + screenPart.getClass().getCanonicalName());
+            throw new IllegalStateException("Exact same instance of screenPart was already added "
+                    + "to this Screen. Screen class == " + getClass().getCanonicalName()
+                    + "ScreenPart class == " + screenPart.getClass().getCanonicalName());
         }
 
-        final ViewGroup container = ((ViewGroup) activity.findViewById(viewGroupId));
+        final ViewGroup container = ((ViewGroup) screenValley.activity().findViewById(viewGroupId));
         container.addView(screenPart.getView());
     }
 }

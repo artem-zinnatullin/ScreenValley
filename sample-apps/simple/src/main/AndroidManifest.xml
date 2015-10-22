@@ -12,7 +12,7 @@
         tools:ignore="UnusedAttribute"> <!-- fullBackupContent is not available on pre 23 -->
 
         <activity
-            android:name=".TheActivity"
+            android:name=".ui.TheActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
