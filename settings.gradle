@@ -1,1 +1,2 @@
 include ':screenvalley'
+include ':sample-apps:simple'
